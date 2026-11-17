@@ -1,0 +1,290 @@
+{
+  "name": "My workflow linkedin",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=# ROLE\n\nYou are an expert LinkedIn Content Strategist.\n\nYour job is to evaluate multiple content ideas and select the single best one.\n\n---\n\n# INPUT\n\n{{ $json.message.text }}\n\n---\n\n# EVALUATION CRITERIA\n\nEvaluate each idea based on:\n\n1. Virality potential\n2. Practical value\n3. Originality\n4. Relevance in 2026\n5. Ease of understanding\n6. Engagement potential\n7. Authority-building potential\n\nThink carefully before making your decision.\n\nChoose ONLY ONE idea.\n\n---\n\n# OUTPUT\n\nGenerate the output using the connected structured output parser.",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "id": "a15be484-faeb-4641-8364-03c17bdf8f9f",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -1248,
+        -64
+      ],
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "9e1eef16-bc4c-402d-a0ea-b09fb4480a0a",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -1312,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=\n# ROLE\n\nYou are an elite LinkedIn ghostwriter with expertise in AI, Product Management, SaaS, Startups, and Technology.\n\nYour mission is to transform the selected idea into a LinkedIn post that educates, builds authority, and drives meaningful engagement.\n\n---\n\n# INPUT\n\nSelected Idea:\n{{$json.output.selectedIdea}}\n\nReason Selected:\n{{$json.output.reason}}\n\nTarget Audience:\n{{$json.output.targetAudience}}\n\nContent Angle:\n{{$json.output.contentAngle}}\n\nContent Goal:\n{{$json.output.contentGoal}}\n\n---\n\n# OBJECTIVE\n\nWrite a LinkedIn post that:\n\n- Stops professionals from scrolling.\n- Delivers one clear and valuable insight.\n- Builds credibility through useful content.\n- Encourages discussion.\n- STRICT WORD LIMIT: Between 150 and 220 words.\n\n---\n\n# WRITING STYLE\n\nWrite like an experienced Product Leader \n\nUse:\n\n• Clear and simple language.\n• Short paragraphs (1–2 lines).\n• Logical flow.\n• Practical insights.\n• Real-world examples or analogies where helpful.\n• A confident but humble tone.\n• Integrate tool names naturally; avoid listing them like a grocery list.\n\nAvoid:\n\n• Buzzwords\n• Corporate jargon\n• Generic motivational advice\n• AI clichés\n• Overhyping\n• Emojis\n• Hashtags\n• Markdown formatting\n\n---\n\n# STRUCTURE\n\n1. Hook\nWrite a compelling first sentence that creates curiosity.\n\n2. Context\nExplain why this topic matters now.\n\n3. Core Insight\nTeach one valuable lesson.\n\n4. Example\nUse a practical example, framework, or analogy.\n\n5. Actionable Takeaway\nGive readers something they can apply immediately.\n\n6. Engagement\nEnd with one thoughtful question that encourages comments.\n\n---\n\n# QUALITY CHECK\n\nBefore responding, verify:\n\n✓ Word count is strictly between 150 and 220 words.\n✓ Every paragraph adds value.\n✓ No unnecessary repetition.\n✓ Easy to read on mobile.\n✓ Sounds like a real person.\n✓ One central message.\n✓ Every sentence earns its place.\n\n---\n\n# OUTPUT\n\nGenerate the output using the connected structured output parser.\n\n```",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "id": "d2c7b03f-4957-464e-be9e-e877a90d6e7c",
+      "name": "AI Agent1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -912,
+        -64
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "b4e9ff4e-91fd-4487-9bd1-2266d1b01f3e",
+      "name": "Google Gemini Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -944,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"linkedinPost\": \"The complete LinkedIn post goes here\",\n  \"hook\": \"The first sentence\",\n  \"mainTakeaway\": \"The key lesson\",\n  \"estimatedReadTime\": \"45 seconds\"\n}"
+      },
+      "id": "daf42d5e-90ec-4705-a62c-c3ec5eca953b",
+      "name": "Structured Output Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -752,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"selectedIdea\": \"Explain how to build and launch an AI product...\",\n  \"reason\": \"This idea has the highest virality and authority-building potential...\",\n  \"targetAudience\": \"Founders, PMs, and developers\",\n  \"contentAngle\": \"Practical blueprint\",\n  \"contentGoal\": \"Build Authority\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -1136,
+        176
+      ],
+      "id": "c6a099d0-68bf-4dc2-81de-bdb25405b349",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "message": "=🚨 New LinkedIn Post Ready for Review!\n\n**Hook:** \n{{$json.output.hook}}\n\n**Full Post:**\n{{$json.output.linkedinPost}}",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -592,
+        -112
+      ],
+      "id": "a76a033c-6a00-4e76-af81-0696448a7107",
+      "name": "Send message and wait for response",
+      "webhookId": "11111111-1111-4111-8111-111111111111"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "aed100cc-f7f0-484a-8959-c64793af4d6a",
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -416,
+        -64
+      ],
+      "id": "586d344f-82eb-4a2d-a2be-556167cfbfeb",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "person": "YOUR_LINKEDIN_PERSON_ID",
+        "text": "={{ $('AI Agent1').item.json.output.linkedinPost }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        -160
+      ],
+      "id": "04524eb6-c881-4a29-8be6-57eea2a5d8b1",
+      "name": "Create a post"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1472,
+        -64
+      ],
+      "id": "ba50f52a-3299-46e4-9b30-3de739770dc1",
+      "name": "Telegram Trigger",
+      "webhookId": "22222222-2222-4222-8222-222222222222"
+    }
+  ],
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Send message and wait for response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send message and wait for response": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Create a post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "pinData": {},
+  "triggerCount": 0,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}
