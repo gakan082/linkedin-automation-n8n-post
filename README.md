@@ -2,7 +2,10 @@
 
 An n8n workflow template that turns an idea sent through Telegram into a LinkedIn post draft, asks for approval in Telegram, and publishes the post to LinkedIn only when it is approved.
 
-> **Template status:** This is a sanitized, reusable workflow template. 
+> **Template status:** This is a sanitized, reusable workflow template.
+## Workflow overview
+
+![n8n LinkedIn Content Approval Automation workflow](workflow-overview.png)
 
 ## What the workflow does
 
