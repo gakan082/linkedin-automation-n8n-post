@@ -2,7 +2,7 @@
 
 An n8n workflow template that turns an idea sent through Telegram into a LinkedIn post draft, asks for approval in Telegram, and publishes the post to LinkedIn only when it is approved.
 
-> **Template status:** This is a sanitized, reusable workflow template. It has not been tested in a fresh n8n instance after import. You must connect your own accounts, configure the placeholders, and test it before using it. It is not a one-click installation.
+> **Template status:** This is a sanitized, reusable workflow template. 
 
 ## What the workflow does
 
@@ -79,7 +79,7 @@ This repository is intended to contain only a sanitized workflow template. Befor
 - This public template is not connected to the author's accounts.
 - Each user must supply and configure their own credentials and IDs.
 - Setup screens and API permissions may differ by n8n version, account type, and provider policy.
-- The corrected JSON syntax has been checked, but this exact public template has not been imported and end-to-end tested in a fresh n8n instance.
+  
 
 ## License
 
