@@ -27,7 +27,7 @@ An n8n workflow template that turns an idea sent through Telegram into a LinkedI
 
 ## Import the workflow
 
-1. Download `linkedin-automation-public.json` from this repository.
+1. Download `linkedin-automation-public(2).json` from this repository.
 2. Open your n8n instance.
 3. Import the downloaded JSON as a workflow (the menu wording may vary by n8n version).
 4. Open the imported workflow and configure the credentials and placeholders described below.
